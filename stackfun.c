@@ -40,16 +40,11 @@ void	index_stack(t_stack *stack, int ac)
 
 	i = 0;
 	head = stack;
-	swap = INT_MAX; 
+	swap = INT_MAX;
 	stack = head;
 	while (i < ac)
 	{
-		while (stack != NULL)
-		{
-			if (stack->val == swap && stack->index == 0)
-				stack->index = i;	
-			stack = stack->next;
-		}
+		index_util(stack, i, swap);
 		stack = head;
 		swap = INT_MAX;
 		while (stack != NULL)

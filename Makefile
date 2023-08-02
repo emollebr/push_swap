@@ -15,7 +15,7 @@ CFLAGS  := -Wall -Wextra -Werror
 LIBFTFLAGS := -Imy_lib -Lmy_lib
 LIBFT := ./my_lib/
 LIBS := $(LIBFT)/my_lib.a
-SRCS    := main.c push_swap.c sortfun.c stackfun.c
+SRCS    := main.c push_swap.c sortfun.c stackfun.c utils.c
 OBJS    := $(SRCS:.c=.o)
 ################################################################################
 
