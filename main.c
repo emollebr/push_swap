@@ -1,43 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emollebr <emollebr@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/02 13:23:00 by emollebr          #+#    #+#             */
+/*   Updated: 2023/08/02 13:23:01 by emollebr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-/*void	print_stack (t_stack *stack)
-{
-    int i;
-    int size;
-
-    if (!stack)
-        return ;
-    size =  stack_size(stack);
-    i = 1;
-	while (i < size)
-	{
-		ft_printf("val: %d\n", stack->val);
-		stack = stack -> next;
-        i++;
-	}
-	ft_printf("val: %d\n", stack->val);
-	ft_printf("\n");
-}
-*/
-/*void	print_index (t_stack *stack)
-{
-    int i;
-    int size;
-
-    if (!stack)
-        return ;
-    i = 1;
-    size = stack_size(stack);
-	while (i < size)
-	{
-		ft_printf("index: %d\n", stack->index);
-		stack = stack -> next;
-        i++;
-	}
-	ft_printf("index: %d\n", stack->index);
-	ft_printf("\n");
-}
-*/
 int is_sorted(t_stack *stack)
 {
 	while (stack->next != NULL)
@@ -47,24 +21,21 @@ int is_sorted(t_stack *stack)
 		else 
 				return (0);
 	}
-	ft_printf("Stack is sorted!\n");
 	return (1);
 }
 
-int argcheck(char **av, int ac)
+int argcheck(char **args, int size)
 {
     int i;
     int j;
 
-    i = 1;
-    //missing limits for int size
-    i = 1;
-    while (av[i])
+    i = 0;
+    while (args[i])
     {
         j = 0;
-        while (av[i][j] != '\0')
+        while (args[i][j] != '\0')
         {
-            if (!ft_isdigit(av[i][j]) && av[i][j] != '-')
+            if (!ft_isdigit(args[i][j]) && args[i][j] != '-')
             {
                 ft_printf("Error\n");
                 exit(2);
@@ -74,7 +45,7 @@ int argcheck(char **av, int ac)
         j = 0;
         while (j < i)
         {
-            if (ft_atoi(av[j]) == ft_atoi(av[i]))
+            if (ft_atoi(args[j]) == ft_atoi(args[i]))
             {
                 ft_printf("Error\n");
                 exit(2);
@@ -82,60 +53,100 @@ int argcheck(char **av, int ac)
             j++;
         }
         i++;
-    } 
-    if (ac < 2)
+    }
+    if (size == 0)
         exit (1);
-    if (ac == 3)
+    if (size == 2)
     {
-       if (ft_atoi(av[1]) > ft_atoi(av[2]))
+       if (ft_atoi(args[0]) > ft_atoi(args[1]))
            write(1, "sa\n", 1);
         else
             write(1, "Stack is sorted!\n", 17);
        exit (1);
    }
-    return(1);
+	return (1);
+}
+
+int	arg_size(char **args)
+{
+	int	i;
+	
+	i = 0;
+	while (args[i] != NULL)
+		i++;
+	return (i);
+}
+
+char	**av_to_arg(char **av, char **args)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 1;
+	while (av[j])
+	{
+		args[i] = av[j];
+		i++;
+		j++;
+	}
+	return (args);
 }
 
 int free_tab(t_stack *stack)
 {
-    t_stack *tmp;
-    t_stack *current;
+	t_stack *tmp;
+	t_stack *current;
 
-   current = stack;
-    while (current)
-    {   
-        tmp = current;
-        current = current->next;
-        free(tmp);
-    }
-    return (1);
+ 	current = stack;
+  	while (current)
+  	{   
+		tmp = current;
+		current = current->next;
+    	free(tmp);
+  	}
+   	return (1);
 }
 
 int main(int ac, char **av)
 {
-    t_stack **a_stack;
- 	t_stack **b_stack;
-    int         size; 
+	t_stack **a_stack;
+	t_stack **b_stack;
+	char	**args;
+	int     size;
 
-    argcheck(av, ac);
-    size = ac - 1;
-    a_stack = ft_calloc(8, 1);
+	if (ac == 2)
+	{
+		args = ft_split(av[1], ' ');
+		size = arg_size(args);
+		argcheck(args, size);
+	}
+	else
+	{
+		size = ac - 1;
+		args = ft_calloc(8, size);
+		if (!args)
+			return (-1);
+		args = av_to_arg(av, args);
+		argcheck(args, size);
+	}
+	a_stack = ft_calloc(8, 1);
     b_stack = ft_calloc(8, 1);
-    *a_stack = parse_stack(av, size);
+    *a_stack = parse_stack(args, size);
     *b_stack = parse_stack(NULL, 0);
-    index_stack(*a_stack, ac);
-    if(is_sorted(*a_stack))
-        return (0);
-    if (size == 3)
-        sort_3(a_stack);
-    if (size == 4)
-        sort_4(a_stack, b_stack);
-    if (size == 5)
-        sort_5(a_stack, b_stack);
-    if (size > 5)
-    a_stack = radix_sort(a_stack, b_stack);
-   // print_stack(*a_stack);
+	index_stack(*a_stack, size + 1);
+ 	if(is_sorted(*a_stack))
+       	return (0);
+	if (size == 3)
+       	sort_3(a_stack);
+	if (size == 4)
+    	sort_4(a_stack, b_stack);
+	if (size == 5)
+		sort_5(a_stack, b_stack);
+	if (size > 5)
+    	a_stack = radix_sort(a_stack, b_stack);
     free_tab(*a_stack);
     free_tab(*b_stack);
+	free(args);
 	return(0);
 }
