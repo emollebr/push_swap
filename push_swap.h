@@ -14,30 +14,28 @@ typedef struct s_stack
     struct s_stack  *next;
 }               t_stack;
 
-int swap(t_stack *stack, char *op);
-int	push(t_stack **a_stack, t_stack **b_stack, char *op);
-int	rotate(t_stack *a_stack, char *op);
-int is_sorted(t_stack *stack);
-int stack_size(t_stack *stack);
-/*
-int rotate(t_stack *stack);
-int rev_rotate(t_stack *stack);
-int sa(t_stack *a_stack);
-int sb(t_stack *b_stack);
-int ss(t_stack *a_stack, t_stack *b_stack);
-int pa(t_stack *a_stack, t_stack *b_stack);
-int pb(t_stack *b_stack, t_stack *a_stack);
-int ra(t_stack *a_stack);
-int rb(t_stack ba_stack);
-int rra(t_stack *a_stack);
-int rrb(t_stack *b_stack);
-int rrr(t_stack *a_stack, t_stack *b_stack);*/
 
-void print_stack (t_stack *stack);
+int stack_size(t_stack *stack);
 t_stack *parse_stack(char **av, int size);
 t_stack *stack_last(t_stack *lst);
 void    stack_add_back(t_stack *lst, int content);
-void    print_index (t_stack *stack);
-t_stack *radix_sort(t_stack *a, t_stack *b);
+void index_stack(t_stack *stack, int ac);
+
+int argcheck(char **av, int ac);
+int free_tab(t_stack *stack);
+int is_sorted(t_stack *stack);
+
+int swap(t_stack **a_stack, char *op);
+int	ss(t_stack **a_stack, t_stack **b_stack);
+int	push(t_stack **a_stack, t_stack **b_stack, char *op);
+int	rotate(t_stack **a_stack, char *op);
+int revrot(t_stack **a, char *op);
+
+int sort_3(t_stack **a_stack);
+int sort_4(t_stack **a_stack, t_stack **b_stack);
+int sort_5(t_stack **a_stack, t_stack **b_stack);
+t_stack **radix_sort(t_stack **a, t_stack **b);
+/*void print_stack (t_stack *stack);
+void print_index (t_stack *stack);*/
 
 #endif
