@@ -32,16 +32,17 @@ t_stack		*stack_last(t_stack *lst);
 void		stack_add_back(t_stack *lst, int content);
 void		index_stack(t_stack *stack, int ac);
 
-int	argcheck(char **args, int size);
+int	argcheck(char **args);
 int	is_sorted(t_stack *stack);
 void	sort_stack(t_stack **a_stack, t_stack **b_stack, int size);
-int	args_handling(char **av, int ac);
+char	**args_handling(char **av, int ac);
 
 int	get_size(char **args, int size);
-int	free_tab(t_stack *stack);
+void	free_tab(t_stack **stack);
+void free_arr(char **arr, int size);
 char		**av_to_arg(char **av, char **args);
 void	if_args(char **args, int i, int j, int x);
-void	index_util(t_stack **stack, int i, int swap);
+void	index_util(t_stack *stack, int i, int swap);
 
 int	swap(t_stack **a_stack, char *op);
 int	ss(t_stack **a_stack, t_stack **b_stack);

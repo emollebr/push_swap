@@ -7,28 +7,57 @@ char	**av_to_arg(char **av, char **args)
 
 	i = 0;
 	j = 1;
+	args = ft_calloc(8, (get_size(av, -1) + 1));
+	if (!args)
+		return (NULL);
 	while (av[j])
 	{
-		args[i] = av[j];
+		args[i] = ft_strdup(av[j]);
 		i++;
 		j++;
 	}
+	args[i] = NULL;
 	return (args);
 }
 
-int	free_tab(t_stack *stack)
+void	free_tab(t_stack **stack)
 {
 	t_stack	*tmp;
 	t_stack	*current;
 
-	current = stack;
+	current = *stack;
 	while (current)
 	{
 		tmp = current;
 		current = current->next;
 		free(tmp);
 	}
-	return (1);
+	*stack = NULL;
+	return ;
+}
+
+void free_arr(char **arr, int size) 
+{
+	int	i;
+	ft_printf("size = %d\n", size);
+	i = 0;
+    if (arr == NULL) 
+		return;
+    // char **ptr = arr;
+    // while (i < size - 1) 
+	// {
+    //     free(*ptr);
+    //     ptr++;
+	// 	i++;
+    // }
+	while (arr[i])
+	{
+		ft_printf("here : %p\n", arr[i]);
+		if (arr[i])
+			free(arr[i]);
+		i++;
+	}
+    free(arr);
 }
 
 int	get_size(char **args, int size)
@@ -70,7 +99,7 @@ void	if_args(char **args, int i, int j, int x)
 	return ;
 }
 
-void	index_util(t_stack **stack, int i, int swap)
+void	index_util(t_stack *stack, int i, int swap)
 {
 	while (stack != NULL)
 	{

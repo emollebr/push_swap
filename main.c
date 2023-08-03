@@ -24,7 +24,7 @@ int	is_sorted(t_stack *stack)
 	return (1);
 }
 
-int	argcheck(char **args, int size)
+int	argcheck(char **args)
 {
 	int	i;
 	int	j;
@@ -51,17 +51,9 @@ int	argcheck(char **args, int size)
 
 void	sort_stack(t_stack **a_stack, t_stack **b_stack, int size)
 {
-	if (size == 0)
-		exit (1);
-	if (size == 2)
-	{
-		if (ft_atoi(args[0]) > ft_atoi(args[1]))
-			write(1, "sa\n", 1);
-		exit (1);
-	}
 	index_stack(*a_stack, size + 1);
 	if (is_sorted(*a_stack))
-		return (0);
+		return ;
 	if (size == 3)
 		sort_3(a_stack);
 	if (size == 4)
@@ -70,45 +62,53 @@ void	sort_stack(t_stack **a_stack, t_stack **b_stack, int size)
 		sort_5(a_stack, b_stack);
 	if (size > 5)
 		a_stack = radix_sort(a_stack, b_stack);
-	free_tab(*a_stack);
-	free_tab(*b_stack);
 }
 
-int	args_handling(char **av, int ac)
+char	**args_handling(char **av, int ac)
 {
-	int	size;
+	char	**args;
 
+	args = NULL;
 	if (ac == 2)
 	{
 		args = ft_split(av[1], ' ');
-		size = get_size(args, -1);
-		argcheck(args, size);
+		argcheck(args);
 	}
 	else
 	{
-		size = ac - 1;
-		args = ft_calloc(8, size);
-		if (!args)
-			return (-1);
 		args = av_to_arg(av, args);
-		argcheck(args, size);
+		argcheck(args);
 	}
-	return (size);
+	return (args);
 }
 
 int	main(int ac, char **av)
 {
-	t_stack	**a_stack;
-	t_stack	**b_stack;
+	t_stack	*a_stack;
+	t_stack	*b_stack;
 	char	**args;
 	int		size;
 
-	size = args_handling(av, ac);
-	a_stack = ft_calloc(8, 1);
-	b_stack = ft_calloc(8, 1);
-	*a_stack = parse_stack(args, size);
-	*b_stack = parse_stack(NULL, 0);
-	sort_stack(a_stack, b_stack, size);
-	free(args);
+
+		ft_printf("%p\n", av[1][1]);
+	args = args_handling(av, ac);
+	size = get_size(args, -1);
+	if (size == 0)
+		exit (1);
+	if (size == 2)
+	{
+		if (ft_atoi(args[0]) > ft_atoi(args[1]))
+			write(1, "sa\n", 1);
+		exit (1);
+	}
+	//a_stack = ft_calloc(size, sizeof(t_stack));
+	//b_stack = ft_calloc(1, 8);
+	a_stack = parse_stack(args, size);
+	b_stack = parse_stack(NULL, 1);
+	sort_stack(&a_stack, &b_stack, size);
+	// int n = 0;
+	free_arr(args, size);
+	free_tab(&a_stack);
+	free_tab(&b_stack);
 	return (0);
 }

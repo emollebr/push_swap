@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME    := push_swap
-CFLAGS  := -Wall -Wextra -Werror
+CFLAGS  := -g -Wall -Wextra -Werror
 LIBFTFLAGS := -Imy_lib -Lmy_lib
 LIBFT := ./my_lib/
 LIBS := $(LIBFT)/my_lib.a
