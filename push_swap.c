@@ -45,7 +45,7 @@ int	ss(t_stack **a_stack, t_stack **b_stack)
 int	push(t_stack **a_stack, t_stack **b_stack, char *op)
 {
 	t_stack	*new;
-	t_stack *tmp;
+	t_stack	*tmp;
 
 	if (*b_stack == NULL)
 		return (0);
@@ -75,7 +75,7 @@ int	rotate(t_stack **a_stack, char *op)
 	*a_stack = (*a_stack)->next;
 	current_node = *a_stack;
 	while (current_node->next != NULL)
-	current_node = current_node->next;
+		current_node = current_node->next;
 	current_node->next = first_node;
 	first_node->next = NULL;
 	ft_putstr_fd(op, 1);
