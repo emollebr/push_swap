@@ -17,10 +17,10 @@ t_stack	*parse_stack(char **args, int size)
 	int		i;
 	t_stack	*stack;
 
-	stack = (t_stack *)ft_calloc(1, sizeof(t_stack));
-	if (stack == NULL)
-		return (NULL);
 	if (!args)
+		return (NULL);
+	stack = ft_calloc(sizeof(t_stack), 1);
+	if (stack == NULL)
 		return (NULL);
 	stack->val = ft_atoi(args[0]);
 	i = 1;

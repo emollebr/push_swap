@@ -45,6 +45,7 @@ int	ss(t_stack **a_stack, t_stack **b_stack)
 int	push(t_stack **a_stack, t_stack **b_stack, char *op)
 {
 	t_stack	*new;
+	t_stack *tmp;
 
 	if (*b_stack == NULL)
 		return (0);
@@ -55,9 +56,11 @@ int	push(t_stack **a_stack, t_stack **b_stack, char *op)
 	new->index = (*b_stack)->index;
 	new->next = (*a_stack);
 	(*a_stack) = new;
+	tmp = *b_stack;
 	(*b_stack) = (*b_stack)->next;
 	ft_putstr_fd(op, 1);
 	write(1, "\n", 1);
+	free(tmp);
 	return (1);
 }
 

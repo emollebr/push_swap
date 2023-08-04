@@ -38,15 +38,15 @@ void	sort_stack(t_stack **a_stack, t_stack **b_stack, int size);
 char	**args_handling(char **av, int ac);
 
 int	get_size(char **args, int size);
-void	free_tab(t_stack **stack);
-void free_arr(char **arr, int size);
+void	free_tab(t_stack *stack);
+void free_arr(char **arr);
 char		**av_to_arg(char **av, char **args);
 void	if_args(char **args, int i, int j, int x);
 void	index_util(t_stack *stack, int i, int swap);
 
 int	swap(t_stack **a_stack, char *op);
 int	ss(t_stack **a_stack, t_stack **b_stack);
-int	push(t_stack **a_stack, t_stack **b_stack, char *op);
+int push(t_stack **a_stack, t_stack **b_stack, char *op);
 int	rotate(t_stack **a_stack, char *op);
 int	revrot(t_stack **a, char *op);
 

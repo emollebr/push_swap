@@ -20,39 +20,31 @@ char	**av_to_arg(char **av, char **args)
 	return (args);
 }
 
-void	free_tab(t_stack **stack)
+void	free_tab(t_stack *stack)
 {
 	t_stack	*tmp;
 	t_stack	*current;
 
-	current = *stack;
+	current = stack;
 	while (current)
 	{
 		tmp = current;
 		current = current->next;
 		free(tmp);
 	}
-	*stack = NULL;
+	stack = NULL;
 	return ;
 }
 
-void free_arr(char **arr, int size) 
+void free_arr(char **arr) 
 {
 	int	i;
-	ft_printf("size = %d\n", size);
+
 	i = 0;
     if (arr == NULL) 
 		return;
-    // char **ptr = arr;
-    // while (i < size - 1) 
-	// {
-    //     free(*ptr);
-    //     ptr++;
-	// 	i++;
-    // }
 	while (arr[i])
 	{
-		ft_printf("here : %p\n", arr[i]);
 		if (arr[i])
 			free(arr[i]);
 		i++;

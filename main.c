@@ -89,26 +89,20 @@ int	main(int ac, char **av)
 	char	**args;
 	int		size;
 
-
-		ft_printf("%p\n", av[1][1]);
-	args = args_handling(av, ac);
-	size = get_size(args, -1);
-	if (size == 0)
+	if (ac < 3)
 		exit (1);
-	if (size == 2)
+	if (ac == 3)
 	{
-		if (ft_atoi(args[0]) > ft_atoi(args[1]))
+		if (ft_atoi(av[1]) > ft_atoi(av[2]))
 			write(1, "sa\n", 1);
 		exit (1);
 	}
-	//a_stack = ft_calloc(size, sizeof(t_stack));
-	//b_stack = ft_calloc(1, 8);
+	args = args_handling(av, ac);
+	size = get_size(args, -1);
 	a_stack = parse_stack(args, size);
-	b_stack = parse_stack(NULL, 1);
+	b_stack = NULL;
 	sort_stack(&a_stack, &b_stack, size);
-	// int n = 0;
-	free_arr(args, size);
-	free_tab(&a_stack);
-	free_tab(&b_stack);
+	free_arr(args);
+	free_tab(a_stack);
 	return (0);
 }
